@@ -163,7 +163,7 @@
         /* گالری عطرها */
         .perfume-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
             gap: 1rem;
         }
         
@@ -183,16 +183,57 @@
             padding: 1rem;
         }
         
-        .perfume-title {
+        .perfume-title-fa {
             font-weight: bold;
             font-size: 1.1rem;
+            color: var(--primary-color);
+            margin-bottom: 0.25rem;
+        }
+        
+        .perfume-title-en {
+            font-size: 0.95rem;
+            color: #666;
             margin-bottom: 0.5rem;
+            direction: ltr;
+            text-align: right;
         }
         
         .perfume-price {
             color: var(--dark-color);
             font-weight: bold;
             margin-bottom: 0.5rem;
+        }
+        
+        .price-50ml {
+            font-size: 0.9rem;
+            color: #555;
+        }
+        
+        .size-selector {
+            display: flex;
+            gap: 0.5rem;
+            margin: 0.75rem 0;
+        }
+        
+        .size-btn {
+            flex: 1;
+            padding: 0.5rem;
+            border: 2px solid var(--light-color);
+            background: white;
+            border-radius: 4px;
+            cursor: pointer;
+            font-weight: bold;
+            transition: all 0.3s;
+        }
+        
+        .size-btn.active {
+            border-color: var(--primary-color);
+            background-color: var(--light-color);
+            color: var(--dark-color);
+        }
+        
+        .size-btn:hover {
+            border-color: var(--secondary-color);
         }
         
         .add-to-cart {
@@ -296,6 +337,18 @@
         .btn-secondary:hover {
             background-color: #5a6268;
         }
+
+        .btn-whatsapp {
+            background-color: #25D366;
+            color: white;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .btn-whatsapp:hover {
+            background-color: #20ba5b;
+        }
         
         /* نمایش موفقیت سفارش */
         .order-success {
@@ -317,6 +370,16 @@
             background-color: #f1f8e9;
             border-right: 4px solid var(--success-color);
             font-weight: bold;
+        }
+        
+        .size-badge {
+            display: inline-block;
+            background-color: var(--light-color);
+            color: var(--dark-color);
+            padding: 0.2rem 0.5rem;
+            border-radius: 3px;
+            font-size: 0.85rem;
+            margin-right: 0.5rem;
         }
         
         /* تنظیمات واکنش‌گرا */
@@ -443,7 +506,7 @@
 
         <!-- دسته‌بندی و انتخاب عطر -->
         <section id="perfumes">
-            <h2>انتخاب عطر -قیمت ها بر اساس 100 میل هست</h2>
+            <h2>انتخاب عطر</h2>
             <div class="categories">
                 <button class="category-btn active" data-category="all">همه</button>
                 <button class="category-btn" data-category="men">مردانه</button>
@@ -465,6 +528,7 @@
                 <thead>
                     <tr>
                         <th>نام عطر</th>
+                        <th>حجم</th>
                         <th>قیمت واحد (تومان)</th>
                         <th>تعداد</th>
                         <th>قیمت کل (تومان)</th>
@@ -494,52 +558,62 @@
                 <!-- جزئیات نهایی سفارش توسط جاوااسکریپت پر می‌شود -->
             </div>
             
-              <div class="whatsapp-message">
-				برای نهایی کردن خرید لطفاً تصویر این خرید را در واتس‌اپ به شماره 
-				<a href="https://wa.me/989354372306" target="_blank" style="color:#25D366; font-weight:bold; text-decoration:none;">
-				09354372306
-				</a> 
-				ارسال فرمایید.
-			</div>
+            <div class="action-buttons" style="margin-top: 1rem;">
+                <button class="btn btn-whatsapp" id="send-to-whatsapp">
+                    <span>📱</span>
+                    <span>ارسال به واتس‌اپ</span>
+                </button>
+                <button class="btn btn-secondary" id="print-order">چاپ سفارش</button>
+            </div>
+              
+            <div class="whatsapp-message">
+                برای نهایی کردن خرید لطفاً از دکمه "ارسال به واتس‌اپ" استفاده کنید یا تصویر این خرید را در واتس‌اپ به شماره 
+                <a href="https://wa.me/989354372306" target="_blank" style="color:#25D366; font-weight:bold; text-decoration:none;">
+                09354372306
+                </a> 
+                ارسال فرمایید.
+            </div>
         </section>
     </div>
 
     <!-- جاوااسکریپت -->
     <script>
         document.addEventListener('DOMContentLoaded', function() {
-            // اطلاعات عطرها
+            // اطلاعات عطرها با نام فارسی و انگلیسی
             const perfumes = [
                 // عطرهای مردانه
-                { id: 1, name: "Pasha de Cartier", category: "men", price: 3800000, brand: "" },
-                { id: 2, name: "Platinum Égoïste – Chanel", category: "men", price: 3600000, brand: "" },
-                { id: 3, name: "Nautica Voyage – Nautica", category: "men", price: 3400000, brand: "" },
-                { id: 4, name: "Sauvage Elixir – Dior", category: "men", price: 3800000, brand: "" },
-                { id: 5, name: "Altair – Parfums de Marly", category: "men", price: 3800000, brand: "" },
-                { id: 6, name: "Tuscan Leather – Tom Ford", category: "men", price: 3600000, brand: "" },
-                { id: 7, name: "Stronger With You – Emporio Armani", category: "men", price: 4400000, brand: "" },
-				{ id: 8, name: "Lost Cherry – Tom Ford", category: "men", price: 4800000, brand: "" },
-				{ id: 9, name: "Prada L’Homme - Pranhem ", category: "men", price: 3600000, brand: "" },
-				{ id: 10, name: "Versus – Versace", category: "men", price: 3600000, brand: "" },
-				{ id: 11, name: "Santal 33 – Le Labo", category: "men", price: 4400000, brand: "" },
+                { id: 1, nameFa: "کارتیر پاشا", nameEn: "Pasha de Cartier", category: "men", price100: 3800000, price50: 1900000, brand: "" },
+                { id: 2, nameFa: "شانل پلاتینیوم", nameEn: "Platinum Égoïste – Chanel", category: "men", price100: 3600000, price50: 1800000, brand: "" },
+                { id: 3, nameFa: "نوتیا ویاگ", nameEn: "Nautica Voyage – Nautica", category: "men", price100: 3400000, price50: 1700000, brand: "" },
+                { id: 4, nameFa: "ساواج الکسیر", nameEn: "Sauvage Elixir – Dior", category: "men", price100: 3800000, price50: 1900000, brand: "" },
+                { id: 5, nameFa: "دمارلی التیر", nameEn: "Altair – Parfums de Marly", category: "men", price100: 3800000, price50: 1900000, brand: "" },
+                { id: 6, nameFa: "توسکان لدر", nameEn: "Tuscan Leather – Tom Ford", category: "men", price100: 3600000, price50: 1800000, brand: "" },
+                { id: 7, nameFa: "استرانگر ویدیو", nameEn: "Stronger With You – Emporio Armani", category: "men", price100: 4400000, price50: 2200000, brand: "" },
+                { id: 8, nameFa: "تام فورد لاست چر", nameEn: "Lost Cherry – Tom Ford", category: "men", price100: 4800000, price50: 2400000, brand: "" },
+                { id: 9, nameFa: "پرانهم", nameEn: "Prada L'Homme - Prada", category: "men", price100: 3600000, price50: 1800000, brand: "" },
+                { id: 10, nameFa: "ورسوز", nameEn: "Versus – Versace", category: "men", price100: 3600000, price50: 1800000, brand: "" },
+                { id: 11, nameFa: "سانتال", nameEn: "Santal - Le Labo", category: "men", price100: 4400000, price50: 2200000, brand: "" },
                 // عطرهای زنانه
-                { id: 12, name: "Yara Candy – Lattafa", category: "women", price: 3600000, brand: "" },
-                { id: 13, name: "Burberry Weekend", category: "women", price: 3100000, brand: "" },
-                { id: 14, name: "Eclat d’Arpège – Lanvin", category: "women", price: 3800000, brand: "" },
-                { id: 15, name: "Sexy Graffiti – Escada", category: "women", price: 3600000, brand: "" },
-                { id: 16, name: "Euphoria – Calvin Klein", category: "women", price: 3600000, brand: "" },
-                { id: 17, name: "DKNY Be Delicious – Donna Karan", category: "women", price: 3600000, brand: "" },
-                { id: 18, name: "Fleur Narcotique – Ex Nihilo", category: "women", price: 7200000, brand: "" },
-				{ id: 19, name: "Very Sexy – Victoria’s Secret", category: "women", price: 3600000, brand: "" },
-				{ id: 20, name: "Black Opium – Yves Saint Laurent", category: "women", price: 3600000, brand: "" },
-				{ id: 21, name: "Flowerbomb – Viktor & Rolf", category: "women", price: 5400000, brand: "" },
-				{ id: 22, name: "La Vie Est Belle – Lancôme", category: "women", price: 3600000, brand: "" },
-							
-				// عطرهای یونیسکس
-                { id: 23, name: "Angels' Share – By Kilian", category: "unisex", price: 4400000, brand: "" }
-                 ];
+                { id: 12, nameFa: "یارا کندی", nameEn: "Yara Candy ", category: "women", price100: 3600000, price50: 1800000, brand: "" },
+                { id: 13, nameFa: "باربری ویکند", nameEn: "Burberry Weekend", category: "women", price100: 3100000, price50: 1600000, brand: "" },
+                { id: 14, nameFa: "اکلت", nameEn: "Eclat d'Arpège – Lanvin", category: "women", price100: 3800000, price50: 1900000, brand: "" },
+                { id: 15, nameFa: "سکسی گرافیتی ", nameEn: "Sexy Graffiti – Escada", category: "women", price100: 3600000, price50: 1800000, brand: "" },
+                { id: 16, nameFa: "ای فوریا", nameEn: "Euphoria – Calvin Klein", category: "women", price100: 3600000, price50: 1800000, brand: "" },
+                { id: 17, nameFa: "دلیشز", nameEn: "DKNY Be Delicious – Donna Karan", category: "women", price100: 3600000, price50: 1800000, brand: "" },
+                { id: 18, nameFa: "فلور نارکوتیک", nameEn: "Fleur Narcotique – Ex Nihilo", category: "women", price100: 7200000, price50: 3600000, brand: "" },
+                { id: 19, nameFa: "وری سکسی", nameEn: "Very Sexy – Victoria's Secret", category: "women", price100: 3600000, price50: 1800000, brand: "" },
+                { id: 20, nameFa: "بلک اوپیوم", nameEn: "Black Opium – Yves Saint Laurent", category: "women", price100: 3600000, price50: 1800000, brand: "" },
+                { id: 21, nameFa: "فلاوربمب", nameEn: "Flowerbomb – Viktor & Rolf", category: "women", price100: 5400000, price50: 2700000, brand: "" },
+                { id: 22, nameFa: "لوی بل لنکوم", nameEn: "La Vie Est Belle – Lancôme", category: "women", price100: 3600000, price50: 1800000, brand: "" },
+                            
+                // عطرهای یونیسکس
+                { id: 23, nameFa: "آنجلز شیر", nameEn: "Angels' Share – By Kilian", category: "unisex", price100: 4400000, price50: 2200000, brand: "" }
+            ];
 
             const cart = [];
             let activeCategory = 'all';
+            const selectedSizes = {}; // ذخیره سایز انتخاب شده برای هر عطر
+            let currentOrderData = {}; // ذخیره اطلاعات سفارش فعلی
 
             // فرمت قیمت به صورت ارز فارسی
             function formatPrice(price) {
@@ -556,19 +630,47 @@
                     : perfumes.filter(p => p.category === activeCategory);
                 
                 filteredPerfumes.forEach(perfume => {
+                    // مقداردهی اولیه سایز انتخاب شده
+                    if (!selectedSizes[perfume.id]) {
+                        selectedSizes[perfume.id] = 100;
+                    }
+                    
                     const perfumeCard = document.createElement('div');
                     perfumeCard.className = 'perfume-card';
                     
                     perfumeCard.innerHTML = `
                         <div class="perfume-info">
-                            <div class="perfume-title">${perfume.name}</div>
+                            <div class="perfume-title-fa">${perfume.nameFa}</div>
+                            <div class="perfume-title-en">${perfume.nameEn}</div>
                             <div class="perfume-brand">${perfume.brand}</div>
-                            <div class="perfume-price">${formatPrice(perfume.price)} تومان</div>
+                            <div class="perfume-price">
+                                <div>۱۰۰ میل: ${formatPrice(perfume.price100)} تومان</div>
+                                <div class="price-50ml">۵۰ میل: ${formatPrice(perfume.price50)} تومان</div>
+                            </div>
+                            <div class="size-selector">
+                                <button class="size-btn ${selectedSizes[perfume.id] === 50 ? 'active' : ''}" data-id="${perfume.id}" data-size="50">۵۰ میل</button>
+                                <button class="size-btn ${selectedSizes[perfume.id] === 100 ? 'active' : ''}" data-id="${perfume.id}" data-size="100">۱۰۰ میل</button>
+                            </div>
                             <button class="add-to-cart" data-id="${perfume.id}">افزودن به سبد خرید</button>
                         </div>
                     `;
                     
                     perfumeGrid.appendChild(perfumeCard);
+                });
+                
+                // افزودن گوش دهنده‌ها به دکمه‌های انتخاب سایز
+                document.querySelectorAll('.size-btn').forEach(button => {
+                    button.addEventListener('click', function() {
+                        const perfumeId = parseInt(this.getAttribute('data-id'));
+                        const size = parseInt(this.getAttribute('data-size'));
+                        
+                        selectedSizes[perfumeId] = size;
+                        
+                        // بروزرسانی کلاس active
+                        const siblings = this.parentElement.querySelectorAll('.size-btn');
+                        siblings.forEach(btn => btn.classList.remove('active'));
+                        this.classList.add('active');
+                    });
                 });
                 
                 // افزودن گوش دهنده‌ها به دکمه‌های افزودن به سبد خرید
@@ -586,16 +688,23 @@
                 
                 if (!perfume) return;
                 
-                const existingItem = cart.find(item => item.id === perfumeId);
+                const selectedSize = selectedSizes[perfumeId] || 100;
+                const price = selectedSize === 100 ? perfume.price100 : perfume.price50;
+                const cartItemId = `${perfumeId}-${selectedSize}`; // شناسه یکتا برای هر ترکیب عطر و سایز
+                
+                const existingItem = cart.find(item => item.cartItemId === cartItemId);
                 
                 if (existingItem) {
                     existingItem.quantity++;
                 } else {
                     cart.push({
+                        cartItemId: cartItemId,
                         id: perfume.id,
-                        name: perfume.name,
+                        nameFa: perfume.nameFa,
+                        nameEn: perfume.nameEn,
                         brand: perfume.brand,
-                        price: perfume.price,
+                        size: selectedSize,
+                        price: price,
                         quantity: 1
                     });
                 }
@@ -632,14 +741,18 @@
                     
                     const row = document.createElement('tr');
                     row.innerHTML = `
-                        <td data-label="نام عطر">${item.name} (${item.brand})</td>
+                        <td data-label="نام عطر">
+                            <div>${item.nameFa}</div>
+                            <div style="font-size: 0.85rem; color: #666; direction: ltr; text-align: right;">${item.nameEn}</div>
+                        </td>
+                        <td data-label="حجم"><span class="size-badge">${item.size} میل</span></td>
                         <td data-label="قیمت واحد">${formatPrice(item.price)}</td>
                         <td data-label="تعداد">
-                            <input type="number" class="quantity-input" value="${item.quantity}" min="1" data-id="${item.id}">
+                            <input type="number" class="quantity-input" value="${item.quantity}" min="1" data-cart-id="${item.cartItemId}">
                         </td>
                         <td data-label="قیمت کل">${formatPrice(itemTotal)}</td>
                         <td data-label="عملیات">
-                            <button class="remove-item" data-id="${item.id}">حذف</button>
+                            <button class="remove-item" data-cart-id="${item.cartItemId}">حذف</button>
                         </td>
                     `;
                     
@@ -651,7 +764,7 @@
                 // اضافه کردن گوش دهنده‌ها به تغییرات تعداد و دکمه‌های حذف
                 document.querySelectorAll('.quantity-input').forEach(input => {
                     input.addEventListener('change', function() {
-                        const id = parseInt(this.getAttribute('data-id'));
+                        const cartItemId = this.getAttribute('data-cart-id');
                         const quantity = parseInt(this.value);
                         
                         if (quantity < 1) {
@@ -659,7 +772,7 @@
                             return;
                         }
                         
-                        const item = cart.find(item => item.id === id);
+                        const item = cart.find(item => item.cartItemId === cartItemId);
                         if (item) {
                             item.quantity = quantity;
                             updateCart();
@@ -669,8 +782,8 @@
                 
                 document.querySelectorAll('.remove-item').forEach(button => {
                     button.addEventListener('click', function() {
-                        const id = parseInt(this.getAttribute('data-id'));
-                        const index = cart.findIndex(item => item.id === id);
+                        const cartItemId = this.getAttribute('data-cart-id');
+                        const index = cart.findIndex(item => item.cartItemId === cartItemId);
                         
                         if (index !== -1) {
                             cart.splice(index, 1);
@@ -723,6 +836,48 @@
                 return isValid;
             }
 
+            // ایجاد پیام متنی برای واتس‌اپ
+            function generateWhatsAppMessage(firstName, lastName, phone, address, cartItems, total) {
+                let message = `*سفارش جدید از فروشگاه عطر اصل*\n\n`;
+                message += `*اطلاعات خریدار:*\n`;
+                message += `👤 نام: ${firstName} ${lastName}\n`;
+                message += `📱 موبایل: ${phone}\n`;
+                message += `📍 آدرس: ${address}\n\n`;
+                message += `*محصولات:*\n`;
+                
+                cartItems.forEach((item, index) => {
+                    message += `\n${index + 1}. ${item.nameFa}\n`;
+                    message += `   • حجم: ${item.size} میل\n`;
+                    message += `   • تعداد: ${item.quantity}\n`;
+                    message += `   • قیمت واحد: ${formatPrice(item.price)}\n`;
+                    message += `   • جمع: ${formatPrice(item.price * item.quantity)}\n`;
+                });
+                
+                message += `\n━━━━━━━━━━━━━━━━━━━━━━━\n`;
+                message += `*جمع کل: ${formatPrice(total)} تومان*\n`;
+                
+                return message;
+            }
+
+            // ارسال پیام به واتس‌اپ
+            function sendToWhatsApp() {
+                const firstName = document.getElementById('firstName').value;
+                const lastName = document.getElementById('lastName').value;
+                const phone = document.getElementById('phone').value;
+                const address = document.getElementById('address').value;
+                
+                let total = 0;
+                cart.forEach(item => {
+                    total += item.price * item.quantity;
+                });
+                
+                const message = generateWhatsAppMessage(firstName, lastName, phone, address, cart, total);
+                const encodedMessage = encodeURIComponent(message);
+                const whatsappUrl = `https://wa.me/989354372306?text=${encodedMessage}`;
+                
+                window.open(whatsappUrl, '_blank');
+            }
+
             // ثبت سفارش
             function submitOrder() {
                 if (!validateForm()) {
@@ -747,6 +902,14 @@
                 const phone = document.getElementById('phone').value;
                 const address = document.getElementById('address').value;
                 
+                // ذخیره اطلاعات سفارش
+                currentOrderData = {
+                    firstName,
+                    lastName,
+                    phone,
+                    address
+                };
+                
                 // ساخت خلاصه سفارش
                 let orderSummary = `
                     <h4>اطلاعات خریدار:</h4>
@@ -759,6 +922,7 @@
                         <thead>
                             <tr>
                                 <th>نام عطر</th>
+                                <th>حجم</th>
                                 <th>تعداد</th>
                                 <th>قیمت واحد (تومان)</th>
                                 <th>قیمت کل (تومان)</th>
@@ -775,7 +939,11 @@
                     
                     orderSummary += `
                         <tr>
-                            <td>${item.name} (${item.brand})</td>
+                            <td>
+                                <div>${item.nameFa}</div>
+                                <div style="font-size: 0.85rem; color: #666;">${item.nameEn}</div>
+                            </td>
+                            <td>${item.size} میل</td>
                             <td>${item.quantity}</td>
                             <td>${formatPrice(item.price)}</td>
                             <td>${formatPrice(itemTotal)}</td>
@@ -821,6 +989,9 @@
                 // دکمه ثبت سفارش
                 document.getElementById('submit-order').addEventListener('click', submitOrder);
                 
+                // دکمه ارسال به واتس‌اپ
+                document.getElementById('send-to-whatsapp').addEventListener('click', sendToWhatsApp);
+                
                 // دکمه چاپ سبد خرید
                 document.getElementById('print-cart').addEventListener('click', function() {
                     if (cart.length === 0) {
@@ -828,6 +999,11 @@
                         return;
                     }
                     
+                    window.print();
+                });
+
+                // دکمه چاپ سفارش
+                document.getElementById('print-order').addEventListener('click', function() {
                     window.print();
                 });
             }
